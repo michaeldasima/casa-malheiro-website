@@ -1,6 +1,7 @@
 services:
   casa-malheiro:
-    build: .
+    build:
+      context: https://github.com/michaeldasima/casa-malheiro-website.git#main
     container_name: casa-malheiro-website
     restart: unless-stopped
     networks:
