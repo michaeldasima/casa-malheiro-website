@@ -3,5 +3,18 @@ services:
     build: .
     container_name: casa-malheiro-website
     restart: unless-stopped
-    ports:
-      - "80:80"
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.casa-malheiro.rule=Host(`casamalheiro.com`) || Host(`www.casamalheiro.com`)"
+      - "traefik.http.routers.casa-malheiro.entrypoints=web"
+      - "traefik.http.routers.casa-malheiro-secure.rule=Host(`casamalheiro.com`) || Host(`www.casamalheiro.com`)"
+      - "traefik.http.routers.casa-malheiro-secure.entrypoints=websecure"
+      - "traefik.http.routers.casa-malheiro-secure.tls=true"
+      - "traefik.http.routers.casa-malheiro-secure.tls.certresolver=letsencrypt"
+      - "traefik.http.services.casa-malheiro.loadbalancer.server.port=80"
+
+networks:
+  proxy:
+    external: true
