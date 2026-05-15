@@ -1775,9 +1775,12 @@ textarea:focus {
 
   .expanded-gallery img,
   .expanded-gallery img:first-child {
-    aspect-ratio: 1.45 / 1;
+    aspect-ratio: auto;
     grid-column: auto;
     grid-row: auto;
+    height: auto;
+    min-height: 0;
+    object-fit: contain;
   }
 
   .detail-gallery {
@@ -1786,8 +1789,9 @@ textarea:focus {
 
   .detail-gallery img,
   .detail-gallery img:first-child {
+    aspect-ratio: auto;
     height: auto;
-    aspect-ratio: 1.45 / 1;
+    object-fit: contain;
   }
 
   .hosts-photo {
@@ -1829,9 +1833,11 @@ textarea:focus {
 .lightbox img {
   border-radius: 8px;
   box-shadow: 0 34px 100px rgba(0, 0, 0, 0.36);
+  height: auto;
   max-height: 88vh;
   max-width: min(1120px, 94vw);
   object-fit: contain;
+  width: auto;
 }
 
 .lightbox-close {
@@ -1850,4 +1856,17 @@ textarea:focus {
   right: 24px;
   top: 24px;
   width: 48px;
+}
+
+@media (max-width: 640px) {
+  .lightbox {
+    padding: 18px;
+    padding-bottom: max(18px, env(safe-area-inset-bottom));
+    padding-top: max(18px, env(safe-area-inset-top));
+  }
+
+  .lightbox img {
+    max-height: 82dvh;
+    max-width: calc(100vw - 36px);
+  }
 }
