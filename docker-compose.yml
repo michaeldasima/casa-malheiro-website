@@ -1,0 +1,7 @@
+services:
+  casa-malheiro:
+    build: .
+    container_name: casa-malheiro-website
+    restart: unless-stopped
+    ports:
+      - "8080:80"
