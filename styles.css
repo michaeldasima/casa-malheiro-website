@@ -1870,3 +1870,39 @@ textarea:focus {
     max-width: calc(100vw - 36px);
   }
 }
+
+@media (max-width: 980px) and (orientation: landscape), (max-height: 520px) and (pointer: coarse) {
+  .house-panel {
+    padding: 24px;
+  }
+
+  .expanded-gallery,
+  .detail-gallery {
+    gap: 10px;
+    grid-template-columns: 1fr;
+  }
+
+  .expanded-gallery img,
+  .expanded-gallery img:first-child,
+  .detail-gallery img,
+  .detail-gallery img:first-child {
+    aspect-ratio: auto;
+    grid-column: auto;
+    grid-row: auto;
+    height: auto;
+    min-height: 0;
+    object-fit: contain;
+    width: 100%;
+  }
+
+  .lightbox {
+    padding: 18px;
+    padding-bottom: max(18px, env(safe-area-inset-bottom));
+    padding-top: max(18px, env(safe-area-inset-top));
+  }
+
+  .lightbox img {
+    max-height: 82dvh;
+    max-width: calc(100vw - 36px);
+  }
+}
