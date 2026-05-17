@@ -1,0 +1,38 @@
+name: Deploy Casa Malheiro
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: casa-malheiro-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy with Docker Compose over SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          script_stop: true
+          script: |
+            set -e
+
+            DEPLOY_DIR="${HOME}/casa-malheiro-website"
+            COMPOSE_URL="https://raw.githubusercontent.com/michaeldasima/casa-malheiro-website/main/docker-compose.yml"
+
+            mkdir -p "$DEPLOY_DIR"
+            cd "$DEPLOY_DIR"
+
+            curl -fsSL "$COMPOSE_URL" -o docker-compose.yml
+            docker compose up -d --build --remove-orphans
+            docker image prune -f
